@@ -6,7 +6,7 @@ public class CharArray {
 		// TODO Auto-generated method stub
 		char a[] = {'a','b','c'};
 		for (int i=0;i<a.length;i++) {
-			System.out.println(a);
+			System.out.println(a[i]);
 		}
 	}
 
