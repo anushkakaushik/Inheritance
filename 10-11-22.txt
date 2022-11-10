@@ -1,0 +1,157 @@
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table emp
+    -> eno int not null,
+    -> ename varchar(23) not null,
+    -> eadd varchar(22) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'eno int not null,
+ename varchar(23) not null,
+eadd varchar(22) not null' at line 2
+mysql> create table emp(
+    -> eno int not null ,
+    -> ename varchar (22) not null ,
+    -> eadd varchar (33) not null,
+    -> primary key(eno)
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> use Cntdb;
+Database changed
+mysql> desc emp;
+ERROR 1146 (42S02): Table 'cntdb.emp' doesn't exist
+mysql> create table emp(
+    -> eno int not null,
+    -> ename varchar (22) not null,
+    -> eadd varchar (33) not null,
+    -> primary key (eno)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> des emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'des emp' at line 1
+mysql> desc emp;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| eno   | int         | NO   | PRI | NULL    |       |
+| ename | varchar(22) | NO   |     | NULL    |       |
+| eadd  | varchar(33) | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> create table dept (
+    -> deptno int not null,
+    -> location varchar not null,
+    -> location varchar (22) not null,
+    -> eno int not null,
+    -> primary key (eno)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not null,
+location varchar (22) not null,
+eno int not null,
+primary key (eno)
+)' at line 3
+mysql> location varchar (33) not null,
+    -> primary key (eno);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'location varchar (33) not null,
+primary key (eno)' at line 1
+mysql> create table dept (
+    -> deptno int not null,
+    -> eno int not null ,
+    -> primary key (eno)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc dept;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| deptno | int  | NO   |     | NULL    |       |
+| eno    | int  | NO   | PRI | NULL    |       |
++--------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into emp (eno,ename,eadd) value(2,varun,chd);
+ERROR 1054 (42S22): Unknown column 'varun' in 'field list'
+mysql> insert into (eno,ename,eadd) value(2,'varun','chd');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(eno,ename,eadd) value(2,'varun','chd')' at line 1
+mysql> insert into emp (eno,ename,eadd) value (2,'varun','chd');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into (eno,ename,eadd) value (3,'ravi','chd');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(eno,ename,eadd) value (3,'ravi','chd')' at line 1
+mysql>  insert into emp (eno,ename,eadd) value (3,'ravi','chd');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept (deptno , eno) value (1,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept (deptno , eno) value (2,2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept (deptno , eno) value (3,4);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> desc emp and dept;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and dept' at line 1
+mysql>  select  ename , eadd,deptno from emp inner join dept on emp.eno= dept.eno;
++-------+------+--------+
+| ename | eadd | deptno |
++-------+------+--------+
+| varun | chd  |      2 |
++-------+------+--------+
+1 row in set (0.00 sec)
+
+mysql>  select  ename , eadd,deptno from emp left join dept on emp.eno= dept.eno;
++-------+------+--------+
+| ename | eadd | deptno |
++-------+------+--------+
+| varun | chd  |      2 |
+| ravi  | chd  |   NULL |
++-------+------+--------+
+2 rows in set (0.01 sec)
+
+mysql>  select  ename , eadd,deptno from emp left join dept on emp.eno= dept.eno;
++-------+------+--------+
+| ename | eadd | deptno |
++-------+------+--------+
+| varun | chd  |      2 |
+| ravi  | chd  |   NULL |
++-------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql>  select  ename , eadd,deptno from emp right join dept on emp.eno= dept.eno;
++-------+------+--------+
+| ename | eadd | deptno |
++-------+------+--------+
+| NULL  | NULL |      1 |
+| varun | chd  |      2 |
+| NULL  | NULL |      3 |
++-------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  select  ename , eadd,deptno from emp full join dept on emp.eno= dept.eno;
+ERROR 1054 (42S22): Unknown column 'emp.eno' in 'on clause'
+mysql> select from emp full join dept;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from emp full join dept' at line 1
+mysql> select* from emp full join dept;
++-----+-------+------+--------+-----+
+| eno | ename | eadd | deptno | eno |
++-----+-------+------+--------+-----+
+|   3 | ravi  | chd  |      1 |   1 |
+|   2 | varun | chd  |      1 |   1 |
+|   3 | ravi  | chd  |      2 |   2 |
+|   2 | varun | chd  |      2 |   2 |
+|   3 | ravi  | chd  |      3 |   4 |
+|   2 | varun | chd  |      3 |   4 |
++-----+-------+------+--------+-----+
+6 rows in set (0.00 sec)
